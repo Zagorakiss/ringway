@@ -1,3 +1,13 @@
+## Usage
+
+Declare a ring-buffer with size 5:
+
+```
+  import Ringway from 'ringway';
+  
+  const ringbuffer = new Ringway(5);
+```
+
 ## API
 
 * write - writes an element or an array of elements before overwriting and returns the number of elements written to the buffer
