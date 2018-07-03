@@ -9,7 +9,7 @@ test('Test .write method', t => {
     }
 });
 
-test('Test .write and .read methods', t => {
+test('Test .read methods', t => {
     const ringbuffer = new Ringway(5);
     ringbuffer.write([1, 2, 3]);
     if (t.is(ringbuffer.read(), 1) && t.is(ringbuffer.read(), 2)) {
