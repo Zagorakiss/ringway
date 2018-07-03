@@ -2,6 +2,13 @@ import test from 'ava';
 import Ringway from '../src';
 import * as Joi from 'joi';
 
+test('Test .write method', t => {
+    const ringbuffer = new Ringway(5);
+    if (t.is(ringbuffer.write([1, 2, 3]), 3)) {
+        t.pass();
+    }
+});
+
 test('Test .write and .read methods', t => {
     const ringbuffer = new Ringway(5);
     ringbuffer.write([1, 2, 3]);
@@ -16,7 +23,7 @@ test('Test if data different from given schema will be written in buffer', t => 
         schema: Joi.number().integer()
     });
     ringbuffer.write('foo');
-    if (t.is(ringbuffer.read(), 'undefined')) {
+    if (t.is(ringbuffer.read(), undefined)) {
         t.pass();
     }
 });

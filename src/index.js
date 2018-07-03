@@ -16,32 +16,36 @@ export default class Ringway {
     write(data) {
         if (Array.isArray(data)) {
             if (this.config.schema) {
-                data.filter((item) => {
-                    const valid = Joi.validate(data, this.config.schema);
+                data.filter(item => {
+                    const valid = Joi.validate(item, this.config.schema);
                     if (valid.error !== null) {
                         this.displayMessage('Incompatible types');
                         return false;
                     } else {
                         return true;
                     }
-                })
+                });
             }
             if (this.ring.length + data.length > this.size) {
                 this.displayMessage('The ring buffer is full');
             }
-            this.ring = this.ring.concat(data.slice(0, this.size - this.ring.length));
+            const slicedData = data.slice(0, this.size - this.ring.length);
+            this.ring = this.ring.concat(slicedData);
+            return slicedData.length;
         } else {
             if (this.config.schema) {
                 const valid = Joi.validate(data, this.config.schema);
                 if (valid.error !== null) {
                     this.displayMessage('Incompatible types');
-                    return undefined;
+                    return 0;
                 }
             }
             if (this.ring.length < this.size) {
                 this.ring.push(data);
+                return 1;
             } else {
                 this.displayMessage('The ring buffer is full');
+                return 0;
             }
         }
     }
